@@ -1,0 +1,228 @@
+<%- include("../layouts/header") %>
+<%- include("../layouts/navbar") %>
+<%- include("../layouts/sidebar") %>
+
+<div class="content-wrapper">
+
+    <section class="content-header mt-4 mb-4">
+
+        <div class="container-fluid">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h3 class="fw-bold">
+                    <i class="bi bi-bookmark-check"></i>
+                    Data Type
+                </h3>
+
+                <button
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalTambah">
+
+                    <i class="bi bi-plus-circle"></i>
+                    Tambah Type
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="content">
+
+        <div class="container-fluid">
+
+            <div class="card shadow">
+
+                <div class="card-body">
+
+                    <table
+                        id="tableType"
+                        class="table table-bordered table-hover">
+
+                        <thead class="table-primary">
+
+                            <tr>
+
+                                <th width="60">No</th>
+                                <th>Nama Type</th>
+                                <th width="170">Aksi</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <% type.forEach(item=>{ %>
+
+                                <tr>
+
+                                    <td></td>
+
+                                    <td><%= item.nama %></td>
+
+                                    <td>
+
+                                        <button
+                                            class="btn btn-warning btn-sm btnEdit"
+
+                                            data-id="<%= item.id %>"
+                                            data-nama="<%= item.nama %>"
+
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalEdit">
+
+                                            <i class="bi bi-pencil-square"></i>
+
+                                        </button>
+
+                                        <form
+                                            action="/type/delete/<%= item.id %>"
+                                            method="POST"
+                                            class="d-inline formDelete">
+
+                                            <button
+                                                type="submit"
+                                                class="btn btn-danger btn-sm">
+
+                                                <i class="bi bi-trash"></i>
+
+                                            </button>
+
+                                        </form>
+
+                                    </td>
+
+                                </tr>
+
+                            <% }) %>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+<!-- Modal Tambah -->
+
+<div
+    class="modal fade"
+    id="modalTambah">
+
+    <div class="modal-dialog">
+
+        <form
+            action="/type/tambah"
+            method="POST">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5>Tambah Type</h5>
+
+                    <button
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <label>Nama Type</label>
+
+                    <input
+                        name="nama"
+                        class="form-control"
+                        required>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button class="btn btn-primary">
+
+                        Simpan
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- Modal Edit -->
+
+<div
+    class="modal fade"
+    id="modalEdit">
+
+    <div class="modal-dialog">
+
+        <form
+            id="formEdit"
+            method="POST">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5>Edit Type</h5>
+
+                    <button
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <label>Nama Type</label>
+
+                    <input
+                        id="editNama"
+                        name="nama"
+                        class="form-control"
+                        required>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button class="btn btn-warning">
+
+                        Update
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+<%- include("../layouts/data") %>
+
+<script src="/js/type.js"></script>
+
+<%- include("../layouts/footer") %>

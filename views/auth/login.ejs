@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Login</title>
+
+<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+
+<div class="container">
+
+<div class="row justify-content-center vh-100 align-items-center">
+
+<div class="col-md-4">
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<h3 class="text-center mb-4">
+
+Gudang Login
+
+</h3>
+
+<% if(typeof error !== 'undefined'){ %>
+
+<div class="alert alert-danger">
+
+<%= error %>
+
+</div>
+
+<% } %>
+
+<form method="POST" action="/login">
+
+<input
+name="username"
+class="form-control mb-3"
+placeholder="Username">
+
+<input
+type="password"
+name="password"
+class="form-control mb-3"
+placeholder="Password">
+
+<button class="btn btn-primary w-100">
+
+Login
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

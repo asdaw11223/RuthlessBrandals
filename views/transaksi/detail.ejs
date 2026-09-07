@@ -1,0 +1,213 @@
+<%- include("../layouts/header") %>
+<%- include("../layouts/sidebar") %>
+<%- include("../layouts/navbar") %>
+
+<div class="content-wrapper">
+
+<section class="content-header">
+
+<div class="container-fluid">
+
+<h3>
+
+<%= transaksi.no %>
+
+</h3>
+
+</div>
+
+</section>
+
+<section class="content">
+
+<div class="container-fluid">
+
+<div class="card shadow">
+
+<div class="card-header">
+
+<div class="row">
+
+<div class="col-md-3">
+
+<b>Kelompok</b>
+
+<br>
+
+<%= transaksi.kelompok %>
+
+</div>
+
+<div class="col-md-3">
+
+<b>Jenis</b>
+
+<br>
+
+<%= transaksi.jenis %>
+
+</div>
+
+<div class="col-md-3">
+
+<b>Status</b>
+
+<br>
+
+<span class="badge bg-warning">
+
+<%= transaksi.status %>
+
+</span>
+
+</div>
+
+<div class="col-md-3">
+
+<b>Tanggal</b>
+
+<br>
+
+<%= transaksi.tanggal %>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card-body">
+
+<table class="table table-bordered">
+
+<thead>
+
+<tr>
+
+<th>Barang</th>
+
+<th width="120">Qty</th>
+
+<th width="150">Harga</th>
+
+<th width="150">Subtotal</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<% transaksi.detail.forEach(item=>{ %>
+
+<tr>
+
+<td>
+
+<%= item.barang %>
+
+</td>
+
+<td>
+
+<%= item.qty %>
+
+</td>
+
+<td>
+
+Rp <%= item.harga.toLocaleString("id-ID") %>
+
+</td>
+
+<td>
+
+Rp <%= item.subtotal.toLocaleString("id-ID") %>
+
+</td>
+
+</tr>
+
+<% }) %>
+
+</tbody>
+
+<tfoot>
+
+<tr>
+
+<th colspan="3">
+
+TOTAL
+
+</th>
+
+<th>
+
+Rp <%= transaksi.total.toLocaleString("id-ID") %>
+
+</th>
+
+</tr>
+
+</tfoot>
+
+</table>
+
+<hr>
+
+<b>Keterangan</b>
+
+<p>
+
+<%= transaksi.keterangan || "-" %>
+
+</p>
+
+</div>
+
+<div class="card-footer d-flex justify-content-between">
+
+<a
+href="/transaksi"
+class="btn btn-secondary">
+
+Kembali
+
+</a>
+
+<% if(transaksi.status=="Pending"){ %>
+
+<form
+action="/transaksi/selesai/<%= transaksi.no %>"
+method="POST"
+class="formSelesai">
+
+<button
+class="btn btn-success">
+
+<i class="bi bi-check-circle"></i>
+
+Selesaikan
+
+</button>
+
+</form>
+
+<% } %>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+<%- include("../layouts/data") %>
+
+<script src="/js/transaksi-create.js"></script>
+
+<%- include("../layouts/footer") %>

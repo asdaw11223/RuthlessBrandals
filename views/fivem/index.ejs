@@ -1,0 +1,420 @@
+<%- include("../layouts/header") %>
+    <%- include("../layouts/sidebar") %>
+
+        <div class="content">
+
+            <%- include("../layouts/navbar") %>
+
+                <div class="container-fluid mt-3">
+
+                    <h2 class="mb-4">FiveM Player Finder</h2>
+
+
+                    <!-- ================================================= -->
+                    <!-- MOBILE : PILIH KOTA -->
+                    <!-- ================================================= -->
+
+                    <div class="d-block d-md-none mb-3">
+
+                        <form method="GET" action="/fivem">
+
+                            <select class="form-select" name="server" onchange="this.form.submit()" required>
+
+                                <option value="">
+                                    Pilih Kota
+                                </option>
+
+                                <% servers.forEach(server=> { %>
+
+                                    <option value="<%= server.code %>" <%=String(selected)===String(server.code)
+                                        ? "selected" : "" %>
+                                        >
+                                        <%= server.nama %>
+                                    </option>
+
+                                    <% }) %>
+
+                            </select>
+
+                        </form>
+
+                    </div>
+
+
+                    <!-- ================================================= -->
+                    <!-- DESKTOP : LIST KOTA + HASIL SERVER -->
+                    <!-- ================================================= -->
+
+                    <div class="row g-3">
+
+
+                        <!-- ================================================= -->
+                        <!-- LIST KOTA - DESKTOP -->
+                        <!-- ================================================= -->
+
+                        <div class="col-md-4 col-lg-3">
+
+                            <div class="d-none d-md-block">
+
+                                <div class="list-group" style="
+                            max-height: calc(100vh - 150px);
+                            overflow-y: auto;
+                        ">
+
+                                    <% servers.forEach(server=> { %>
+
+                                        <a href="/fivem?server=<%= server.code %>" class="
+                                    list-group-item
+                                    list-group-item-action
+                                    <%= String(selected) === String(server.code)
+                                        ? 'active'
+                                        : '' %>
+                                ">
+
+                                            <div class="d-flex justify-content-between align-items-center">
+
+                                                <span>
+
+                                                    <% if (server.icon) { %>
+
+                    <img
+                        src="<%= server.icon %>"
+                        alt="<%= server.nama %>"
+                        width="40"
+                        height="40"
+                        class="rounded me-3"
+                        style="object-fit: cover;"
+                    >
+
+                <% } else { %>
+
+                    <div
+                        class="rounded me-3 d-flex align-items-center justify-content-center"
+                        style="
+                            width:40px;
+                            height:40px;
+                            background:#eee;
+                        "
+                    >
+                        <i class="bi bi-building"></i>
+                    </div>
+
+                <% } %>
+
+                                                        <strong>
+                                                            <%= server.nama %>
+                                                        </strong>
+
+                                                </span>
+
+
+                                                <% if ( String(selected)===String(server.code) ) { %>
+
+                                                    <i class="bi bi-check-circle"></i>
+
+                                                    <% } %>
+
+                                            </div>
+
+                                        </a>
+
+                                        <% }) %>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- ================================================= -->
+                            <!-- MOBILE : LIST TIDAK DITAMPILKAN -->
+                            <!-- ================================================= -->
+
+                            <div class="d-block d-md-none"></div>
+
+                        </div>
+
+
+                        <!-- ================================================= -->
+                        <!-- HASIL SERVER -->
+                        <!-- ================================================= -->
+
+                        <div class="col-md-8 col-lg-9">
+
+
+                            <!-- BELUM PILIH SERVER -->
+
+                            <% if (!selected) { %>
+
+                                <div class="alert alert-info">
+
+                                    <i class="bi bi-info-circle me-1"></i>
+
+                                    Silakan pilih kota terlebih dahulu.
+
+                                </div>
+
+
+                                <!-- SERVER TIDAK DITEMUKAN -->
+
+                                <% } else if (result.length===0) { %>
+
+                                    <div class="alert alert-warning">
+
+                                        <i class="bi bi-exclamation-triangle me-1"></i>
+
+                                        Server tidak ditemukan.
+
+                                    </div>
+
+
+                                    <!-- HASIL SERVER -->
+
+                                    <% } else { %>
+
+
+                                        <% result.forEach(server=> { %>
+
+
+                                            <div class="card mb-4 fivem-server-card">
+
+
+                                                <!-- ================================================= -->
+                                                <!-- HEADER SERVER -->
+                                                <!-- ================================================= -->
+
+                                                <div class="card-header">
+
+                                                    <strong class="server-name">
+
+                                                        <%= server.nama %>
+
+                                                    </strong>
+
+
+                                                    <% if (server.aktif) { %>
+
+                                                        <span class="badge bg-success float-end">
+
+                                                            🟢 Aktif
+
+                                                            &nbsp;
+
+                                                            <i class="bi bi-people"></i>
+
+                                                            <%= server.online %>
+                                                                /
+                                                                <%= server.max %>
+
+                                                        </span>
+
+                                                        <% } else { %>
+
+                                                            <span class="badge bg-danger float-end">
+
+                                                                🔴 Offline
+
+                                                            </span>
+
+                                                            <% } %>
+
+                                                </div>
+
+
+                                                <!-- ================================================= -->
+                                                <!-- BODY SERVER -->
+                                                <!-- ================================================= -->
+
+                                                <div class="card-body">
+
+
+                                                    <!-- ERROR -->
+
+                                                    <% if (server.error) { %>
+
+                                                        <div class="alert alert-danger">
+
+                                                            <i class="bi bi-exclamation-circle me-1"></i>
+
+                                                            Server tidak dapat diakses.
+
+                                                        </div>
+
+
+                                                        <% } else { %>
+
+
+                                                            <!-- ================================================= -->
+                                                            <!-- BANNER -->
+                                                            <!-- ================================================= -->
+
+                                                            <% if (server.banner) { %>
+
+                                                                <img src="<%= server.banner %>"
+                                                                    class="img-fluid rounded mb-3" style="
+                                                width: 100%;
+                                                max-height: 250px;
+                                                object-fit: cover;
+                                            " alt="Server Banner">
+
+                                                                <% } %>
+
+
+                                                                    <!-- ================================================= -->
+                                                                    <!-- HOSTNAME + DISCORD -->
+                                                                    <!-- ================================================= -->
+
+                                                                    <div class="
+                                            d-flex
+                                            justify-content-between
+                                            align-items-center
+                                            mb-3
+                                        ">
+
+                                                                        <strong>
+
+                                                                            <%= server.hostname %>
+
+                                                                        </strong>
+
+
+                                                                        <button type="button" class="btn btn-primary"
+                                                                            onclick="copyDiscord()">
+
+                                                                            <i class="bi bi-discord"></i>
+
+                                                                            Copy Discord
+
+                                                                        </button>
+
+                                                                    </div>
+
+
+                                                                    <!-- ================================================= -->
+                                                                    <!-- SEARCH PLAYER -->
+                                                                    <!-- ================================================= -->
+
+                                                                    <div class="input-group mb-3">
+
+                                                                        <span class="input-group-text">
+
+                                                                            <i class="bi bi-search"></i>
+
+                                                                        </span>
+
+
+                                                                        <input type="text"
+                                                                            class="form-control player-search"
+                                                                            placeholder="Cari ID atau nama player..."
+                                                                            autocomplete="off">
+
+                                                                    </div>
+
+
+                                                                    <!-- ================================================= -->
+                                                                    <!-- TABEL PLAYER -->
+                                                                    <!-- ================================================= -->
+
+                                                                    <div class="table-responsive">
+
+                                                                        <table
+                                                                            class="table table-bordered table-striped player-table">
+
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th style="width: 70px;">No</th>
+                                                                                    <th style="width: 100px;">ID</th>
+                                                                                    <th>Nama</th>
+                                                                                    <th style="width: 120px;">Ping</th>
+                                                                                </tr>
+                                                                            </thead>
+
+                                                                            <tbody>
+
+                                                                                <% if (server.players.length===0) { %>
+
+                                                                                    <tr class="no-player">
+
+                                                                                        <td colspan="4"
+                                                                                            class="text-center">
+
+                                                                                            <i
+                                                                                                class="bi bi-person-x me-1"></i>
+
+                                                                                            Player tidak ditemukan.
+
+                                                                                        </td>
+
+                                                                                    </tr>
+
+                                                                                    <% } else { %>
+
+                                                                                        <% server.players.forEach((player,
+                                                                                            index)=> { %>
+
+                                                                                            <tr class="player-row">
+
+                                                                                                <td class="player-no">
+                                                                                                    <%= index + 1 %>
+                                                                                                </td>
+
+                                                                                                <td class="player-id">
+                                                                                                    <%= player.id %>
+                                                                                                </td>
+
+                                                                                                <td class="player-name">
+                                                                                                    <%= player.name %>
+                                                                                                </td>
+
+                                                                                                <td class="player-ping">
+                                                                                                    <%= player.ping %>
+                                                                                                        ms
+                                                                                                </td>
+
+                                                                                            </tr>
+
+                                                                                            <% }) %>
+
+                                                                                                <% } %>
+
+                                                                            </tbody>
+
+                                                                        </table>
+
+                                                                        <div class="text-muted search-result-info">
+                                                                        </div>
+
+                                                                    </div>
+
+
+                                                                    <% } %>
+
+                                                </div>
+
+                                            </div>
+
+
+                                            <% }) %>
+
+
+                                                <% } %>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- SCRIPT -->
+        <!-- ================================================= -->
+
+        <%- include("../layouts/data") %>
+
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+            <script src="/js/fivem.js"></script>
+
+            <%- include("../layouts/footer") %>

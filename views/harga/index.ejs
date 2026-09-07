@@ -1,0 +1,622 @@
+<%- include("../layouts/header") %>
+    <%- include("../layouts/sidebar") %>
+
+        <div class="content">
+
+            <%- include("../layouts/navbar") %>
+
+                <div class="container-fluid mt-3">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <h3>
+                            <i class="bi bi-tags-fill"></i>
+                            Harga
+                        </h3>
+
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
+
+                            <i class="bi bi-plus-circle"></i>
+
+                            Tambah Card
+
+                        </button>
+
+                    </div>
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-4">
+
+                            <input id="searchCard" class="form-control" placeholder="Cari Card...">
+
+                        </div>
+
+                    </div>
+
+                    <div class="row" id="cardContainer">
+
+                        <% harga.forEach(card=>{ %>
+
+                            <div class="col-lg-6 mb-4 cardHarga">
+
+                                <div class="card shadow">
+
+                                    <div class="card-header bg-primary text-white">
+
+                                        <h5 class="mb-0">
+
+                                            <%= card.nama %>
+
+                                        </h5>
+
+                                    </div>
+
+                                    <div class="card-body">
+
+                                        <h5 class="text-success">
+
+                                            Harga Jual
+
+                                        </h5>
+
+                                        <table class="table table-bordered table-sm">
+
+                                            <thead>
+
+                                                <tr>
+
+                                                    <th>Barang</th>
+
+                                                    <th width="80">Qty</th>
+
+                                                    <th width="140">Harga</th>
+
+                                                </tr>
+
+                                            </thead>
+
+                                            <tbody>
+
+                                                <% card.jual.forEach(item=>{ %>
+
+                                                    <tr>
+
+                                                        <td>
+                                                            <%= item.barang %>
+                                                        </td>
+
+                                                        <td>
+                                                            <%= item.qty %>
+                                                        </td>
+
+                                                        <td>
+
+                                                            Rp
+
+                                                            <%= Number(item.harga).toLocaleString("id-ID") %>
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <% }) %>
+
+                                            </tbody>
+
+                                        </table>
+
+                                        <strong>Keterangan</strong>
+
+                                        <p class="text-muted">
+
+                                            <%= card.jual.length ? card.jual[0].keterangan : "-" %>
+
+                                        </p>
+
+                                        <hr>
+
+                                        <h5 class="text-danger">
+
+                                            Harga Beli
+
+                                        </h5>
+
+                                        <table class="table table-bordered table-sm">
+
+                                            <thead>
+
+                                                <tr>
+
+                                                    <th>Barang</th>
+
+                                                    <th width="80">Qty</th>
+
+                                                    <th width="140">Harga</th>
+
+                                                </tr>
+
+                                            </thead>
+
+                                            <tbody>
+
+                                                <% card.beli.forEach(item=>{ %>
+
+                                                    <tr>
+
+                                                        <td>
+                                                            <%= item.barang %>
+                                                        </td>
+
+                                                        <td>
+                                                            <%= item.qty %>
+                                                        </td>
+
+                                                        <td>
+
+                                                            Rp
+
+                                                            <%= Number(item.harga).toLocaleString("id-ID") %>
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <% }) %>
+
+                                            </tbody>
+
+                                        </table>
+
+                                        <strong>Keterangan</strong>
+
+                                        <p class="text-muted">
+
+                                            <%= card.beli.length ? card.beli[0].keterangan : "-" %>
+
+                                        </p>
+
+                                    </div>
+
+                                    <div class="card-footer d-flex justify-content-end gap-2">
+
+                                        <button class="btn btn-warning btnEdit" data-card='<%- JSON.stringify(card) %>'>
+
+                                            <i class="bi bi-pencil"></i>
+
+                                            Edit
+
+                                        </button>
+
+                                        <form action="/harga/delete/<%= card.nama %>" method="POST" class="formDelete">
+
+                                            <button class="btn btn-danger">
+
+                                                <i class="bi bi-trash"></i>
+
+                                                Hapus
+
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <% }) %>
+
+                    </div>
+
+                </div>
+
+        </div>
+
+        <!-- ============================= -->
+        <!-- MODAL TAMBAH -->
+        <!-- ============================= -->
+
+        <div class="modal fade" id="modalTambah">
+
+            <div class="modal-dialog modal-xl">
+
+                <form action="/harga/tambah" method="POST" id="formTambah">
+
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+
+                            <h5>
+
+                                Tambah Card
+
+                            </h5>
+
+                        </div>
+
+                        <div class="modal-body">
+
+                            <div class="mb-3">
+
+                                <label>
+
+                                    Nama Card
+
+                                </label>
+
+                                <input class="form-control" name="card" required>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+                                    <h5 class="text-success">
+
+                                        Harga Jual
+
+                                    </h5>
+
+                                    <table class="table table-bordered" id="tableJual">
+
+                                        <thead>
+
+                                            <tr>
+
+                                                <th>Barang</th>
+
+                                                <th width="80">Qty</th>
+
+                                                <th width="150">Harga</th>
+
+                                                <th width="60"></th>
+
+                                            </tr>
+
+                                        </thead>
+
+                                        <tbody>
+
+                                        </tbody>
+
+                                    </table>
+
+                                    <button type="button" class="btn btn-success" id="btnTambahJual">
+
+                                        + Tambah Barang
+
+                                    </button>
+
+                                    <div class="mt-3">
+
+                                        <label>
+
+                                            Keterangan
+
+                                        </label>
+
+                                        <textarea class="form-control" name="jualKeterangan"></textarea>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <h5 class="text-danger">
+
+                                        Harga Beli
+
+                                    </h5>
+
+                                    <table class="table table-bordered" id="tableBeli">
+
+                                        <thead>
+
+                                            <tr>
+
+                                                <th>Barang</th>
+
+                                                <th width="80">Qty</th>
+
+                                                <th width="150">Harga</th>
+
+                                                <th width="60"></th>
+
+                                            </tr>
+
+                                        </thead>
+
+                                        <tbody>
+
+                                        </tbody>
+
+                                    </table>
+
+                                    <button type="button" class="btn btn-danger" id="btnTambahBeli">
+
+                                        + Tambah Barang
+
+                                    </button>
+
+                                    <div class="mt-3">
+
+                                        <label>
+
+                                            Keterangan
+
+                                        </label>
+
+                                        <textarea class="form-control" name="beliKeterangan"></textarea>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+
+                            <button class="btn btn-primary">
+
+                                Simpan
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- ============================= -->
+        <!-- MODAL EDIT -->
+        <!-- ============================= -->
+
+        <div class="modal fade" id="modalEdit">
+
+            <div class="modal-dialog modal-xl">
+
+                <form method="POST" id="formEdit">
+
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+
+                            <h5>Edit Card</h5>
+
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+                        </div>
+
+                        <div class="modal-body">
+
+                            <div class="mb-3">
+
+                                <label>Nama Card</label>
+
+                                <input class="form-control" id="editCard" name="card" required>
+
+                            </div>
+
+                            <div class="row">
+
+                                <!-- ========================= -->
+                                <!-- JUAL -->
+                                <!-- ========================= -->
+
+                                <div class="col-md-6">
+
+                                    <h5 class="text-success">
+
+                                        Harga Jual
+
+                                    </h5>
+
+                                    <table class="table table-bordered" id="editTableJual">
+
+                                        <thead>
+
+                                            <tr>
+
+                                                <th>Barang</th>
+                                                <th width="80">Qty</th>
+                                                <th width="150">Harga</th>
+                                                <th width="60"></th>
+
+                                            </tr>
+
+                                        </thead>
+
+                                        <tbody>
+
+                                        </tbody>
+
+                                    </table>
+
+                                    <button type="button" class="btn btn-success" id="editTambahJual">
+
+                                        + Tambah Barang
+
+                                    </button>
+
+                                    <div class="mt-3">
+
+                                        <label>Keterangan</label>
+
+                                        <textarea class="form-control" id="editJualKeterangan"
+                                            name="jualKeterangan"></textarea>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- ========================= -->
+                                <!-- BELI -->
+                                <!-- ========================= -->
+
+                                <div class="col-md-6">
+
+                                    <h5 class="text-danger">
+
+                                        Harga Beli
+
+                                    </h5>
+
+                                    <table class="table table-bordered" id="editTableBeli">
+
+                                        <thead>
+
+                                            <tr>
+
+                                                <th>Barang</th>
+                                                <th width="80">Qty</th>
+                                                <th width="150">Harga</th>
+                                                <th width="60"></th>
+
+                                            </tr>
+
+                                        </thead>
+
+                                        <tbody>
+
+                                        </tbody>
+
+                                    </table>
+
+                                    <button type="button" class="btn btn-danger" id="editTambahBeli">
+
+                                        + Tambah Barang
+
+                                    </button>
+
+                                    <div class="mt-3">
+
+                                        <label>Keterangan</label>
+
+                                        <textarea class="form-control" id="editBeliKeterangan"
+                                            name="beliKeterangan"></textarea>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+
+                            <button class="btn btn-primary">
+
+                                Simpan Perubahan
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- ============================= -->
+        <!-- TEMPLATE ROW JUAL -->
+        <!-- ============================= -->
+
+        <template id="templateJual">
+
+            <tr>
+
+                <td>
+
+                    <input class="form-control" name="jualBarang" placeholder="Nama Barang" required>
+
+                </td>
+
+                <td>
+
+                    <input type="number" class="form-control" name="jualQty" value="1" min="1" required>
+
+                </td>
+
+                <td>
+
+                    <input class="form-control rupiah" name="jualHarga" placeholder="Harga" required>
+
+                </td>
+
+                <td>
+
+                    <button type="button" class="btn btn-danger btnHapusBaris">
+
+                        <i class="bi bi-x"></i>
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+        </template>
+
+        <!-- ============================= -->
+        <!-- TEMPLATE ROW BELI -->
+        <!-- ============================= -->
+
+        <template id="templateBeli">
+
+            <tr>
+
+                <td>
+
+                    <input class="form-control" name="beliBarang" placeholder="Nama Barang" required>
+
+                </td>
+
+                <td>
+
+                    <input type="number" class="form-control" name="beliQty" value="1" min="1" required>
+
+                </td>
+
+                <td>
+
+                    <input class="form-control rupiah" name="beliHarga" placeholder="Harga" required>
+
+                </td>
+
+                <td>
+
+                    <button type="button" class="btn btn-danger btnHapusBaris">
+
+                        <i class="bi bi-x"></i>
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+        </template>
+
+
+        <%- include("../layouts/data") %>
+
+            <!-- Paling terakhir -->
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script src="/js/harga.js"></script>
+
+            <%- include("../layouts/footer") %>

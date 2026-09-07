@@ -1,0 +1,248 @@
+<%- include("../layouts/header") %>
+<%- include("../layouts/navbar") %>
+<%- include("../layouts/sidebar") %>
+
+<div class="content-wrapper">
+
+    <section class="content-header mt-4 mb-3">
+        <div class="container-fluid">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h3 class="fw-bold">
+                    <i class="nav-icon bi bi-clock-history"></i>
+                    Log Aktivitas
+                </h3>
+
+            </div>
+
+        </div>
+    </section>
+    <section class="content">
+
+        <div class="container-fluid">
+
+            <div class="card shadow">
+
+                <div class="card-body">
+
+                    <!-- Filter -->
+                    <div class="row mb-3">
+
+                        <div class="col-md-3">
+                            <input
+                                id="searchBarang"
+                                class="form-control"
+                                placeholder="Cari Barang...">
+                        </div>
+
+                        <div class="col-md-3">
+                            <select id="filterAksi" class="form-select">
+
+                                <option value="">Semua Aksi</option>
+
+                                <option>Tambah</option>
+                                <option>Edit</option>
+                                <option>Deposit</option>
+                                <option>Penarikan</option>
+                                <option>Status</option>
+                                <option>Nonaktif</option>
+
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <select id="filterUser" class="form-select">
+
+                                <option value="">Semua User</option>
+
+                                <% [...new Set(logs.map(x=>x.user))].forEach(user=>{ %>
+
+                                    <option><%= user %></option>
+
+                                <% }) %>
+
+                            </select>
+                        </div>
+
+                    </div>
+<div class="row mb-3">
+
+    <div class="col-md-3">
+
+        <label>Dari</label>
+
+        <input
+            type="date"
+            id="tanggalAwal"
+            class="form-control">
+
+    </div>
+
+    <div class="col-md-3">
+
+        <label>Sampai</label>
+
+        <input
+            type="date"
+            id="tanggalAkhir"
+            class="form-control">
+
+    </div>
+
+    <div class="col-md-2 d-flex align-items-end">
+
+        <button
+            id="btnResetFilter"
+            class="btn btn-secondary w-100">
+
+            Reset
+
+        </button>
+
+    </div>
+
+</div>
+
+
+
+                    <!-- Table -->
+
+                    <table
+                        id="tableLog"
+                        class="table table-bordered table-hover">
+
+                        <thead class="table-primary">
+
+                            <tr>
+                                <th>No.</th>
+                                <th>Waktu</th>
+                                <th>User</th>
+                                <th>Aksi</th>
+                                <th>Barang</th>
+                                <th>Type</th>
+                                <th>Sebelum</th>
+                                <th>Sesudah</th>
+                                <th>±</th>
+                                <th>Alasan</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <% logs.forEach(item=>{ %>
+
+                                <tr>
+                                    <td></td>
+                                    <td><%= item.waktu %></td>
+
+                                    <td><%= item.user %></td>
+
+                                    <td>
+
+                                        <% if(item.aksi=="Deposit"){ %>
+
+                                            <span class="badge bg-success">
+                                                Deposit
+                                            </span>
+
+                                        <% } else if(item.aksi=="Penarikan"){ %>
+
+                                            <span class="badge bg-danger">
+                                                Penarikan
+                                            </span>
+
+                                        <% } else if(item.aksi=="Hapus"){ %>
+
+                                            <span class="badge bg-danger">
+                                                Hapus
+                                            </span>
+
+                                        <% } else if(item.aksi=="Tambah"){ %>
+
+                                            <span class="badge bg-primary">
+                                                Tambah
+                                            </span>
+
+                                        <% } else if(item.aksi=="Edit"){ %>
+
+                                            <span class="badge bg-warning text-dark">
+                                                Edit
+                                            </span>
+
+                                        <% } else if(item.aksi=="Status"){ %>
+
+                                            <span class="badge bg-warning text-dark">
+                                                Status
+                                            </span>
+
+                                        <% } else { %>
+
+                                            <span class="badge bg-secondary">
+                                                <%= item.aksi %>
+                                            </span>
+
+                                        <% } %>
+
+                                    </td>
+
+                                    <td><%= item.barang %></td>
+
+                                    <td><%= item.type %></td>
+
+                                    <td><%= item.sebelum %></td>
+
+                                    <td><%= item.sesudah %></td>
+
+                                    <td>
+
+                                        <% if(String(item.perubahan).startsWith("+")){ %>
+
+                                            <span class="fw-bold text-success">
+                                                <%= item.perubahan %>
+                                            </span>
+
+                                        <% } else if(String(item.perubahan).startsWith("-")){ %>
+
+                                            <span class="fw-bold text-danger">
+                                                <%= item.perubahan %>
+                                            </span>
+
+                                        <% } else { %>
+
+                                            <%= item.perubahan %>
+
+                                        <% } %>
+
+                                    </td>
+
+                                    <td><%= item.alasan %></td>
+
+                                </tr>
+
+                            <% }) %>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+
+<%- include("../layouts/data") %>
+
+<!-- Paling terakhir -->
+<script src="/js/log.js"></script>
+
+
+<%- include("../layouts/footer") %>

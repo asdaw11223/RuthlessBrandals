@@ -1,0 +1,152 @@
+<div class="sidebar">
+
+    <div class="logo">
+        <i class="bi bi-box-seam"></i>
+        Gudang
+    </div>
+
+
+    <!-- ================================ -->
+    <!-- DASHBOARD -->
+    <!-- ================================ -->
+
+    <a href="/">
+        <i class="bi bi-speedometer2"></i>
+        Dashboard
+    </a>
+
+
+    <!-- ================================ -->
+    <!-- FIVEM FINDER -->
+    <!-- ================================ -->
+
+    <a href="/fivem">
+        <i class="bi bi-broadcast"></i>
+        FiveM Finder
+    </a>
+
+
+    <!-- ================================ -->
+    <!-- BARANG -->
+    <!-- SEMUA ROLE -->
+    <!-- ================================ -->
+
+    <a href="/barang">
+        <i class="bi bi-box-seam"></i>
+        Barang
+    </a>
+
+
+    <!-- ================================ -->
+    <!-- TRANSAKSI -->
+    <!-- SEMUA ROLE -->
+    <!-- ================================ -->
+
+    <a href="/transaksi">
+        <i class="bi bi-receipt"></i>
+        Transaksi
+    </a>
+
+
+    <!-- ================================ -->
+    <!-- HARGA -->
+    <!-- SEMUA ROLE -->
+    <!-- ================================ -->
+
+    <a href="/harga">
+        <i class="bi bi-tags"></i>
+        Harga Jual
+    </a>
+
+
+    <!-- ================================ -->
+    <!-- DIRTY MONEY -->
+    <!-- SEMUA ROLE -->
+    <!-- ================================ -->
+
+    <a href="/dirty">
+        <i class="bi bi-cash-stack"></i>
+        Dirty Money
+    </a>
+
+
+    <!-- ================================ -->
+    <!-- TYPE -->
+    <!-- HEAD + OWNER -->
+    <!-- ================================ -->
+
+    <% if (
+        currentUser &&
+        (
+            currentUser.role === "Head BuzChef" ||
+            currentUser.role === "Original Gangster"
+        )
+    ) { %>
+
+        <a href="/type">
+            <i class="bi bi-bookmark-check"></i>
+            Type Barang
+        </a>
+
+    <% } %>
+
+
+    <!-- ================================ -->
+    <!-- LOG -->
+    <!-- BUZCHEF + HEAD + OWNER -->
+    <!-- ================================ -->
+
+    <% if (
+        currentUser &&
+        (
+            currentUser.role === "BuzChef" ||
+            currentUser.role === "Head BuzChef" ||
+            currentUser.role === "Original Gangster"
+        )
+    ) { %>
+
+        <a href="/log">
+            <i class="nav-icon bi bi-clock-history"></i>
+            Log Aktivitas
+        </a>
+
+    <% } %>
+
+
+    <!-- ================================ -->
+    <!-- USER -->
+    <!-- HEAD + OWNER -->
+    <!-- ================================ -->
+
+    <% if (
+        currentUser &&
+        (
+            currentUser.role === "Head BuzChef" ||
+            currentUser.role === "Original Gangster"
+        )
+    ) { %>
+
+        <a href="/user">
+            <i class="bi bi-people"></i>
+            User
+        </a>
+
+    <% } %>
+
+
+    <hr>
+
+
+    <!-- ================================ -->
+    <!-- LOGOUT -->
+    <!-- ================================ -->
+
+    <a href="/logout">
+
+        <i class="bi bi-box-arrow-right"></i>
+
+        Logout
+
+    </a>
+
+</div>

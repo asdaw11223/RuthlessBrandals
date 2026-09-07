@@ -1,0 +1,167 @@
+<%- include("../layouts/header") %>
+<%- include("../layouts/sidebar") %>
+
+<div class="content">
+
+    <%- include("../layouts/navbar") %>
+
+    <div class="container-fluid mt-3">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <h2 class="mb-0">
+                <i class="bi bi-person-plus"></i>
+                Tambah User
+            </h2>
+
+            <a href="/user" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i>
+                Kembali
+            </a>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <strong>
+                            Data User Baru
+                        </strong>
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <form
+                            method="POST"
+                            action="/user/create"
+                        >
+
+
+                            <!-- USERNAME -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Username
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="username"
+                                    class="form-control"
+                                    placeholder="Masukkan username"
+                                    autocomplete="off"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <!-- PASSWORD -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Password
+                                </label>
+
+                                <input
+                                    type="password"
+                                    name="password"
+                                    class="form-control"
+                                    placeholder="Masukkan password"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <!-- ROLE -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Role
+                                </label>
+
+                                <select
+                                    name="role"
+                                    class="form-select"
+                                    required
+                                >
+
+                                    <option value="Member">
+                                        Member
+                                    </option>
+
+                                    <option value="BuzChef">
+                                        BuzChef
+                                    </option>
+
+                                    <option value="Head BuzChef">
+                                        Head BuzChef
+                                    </option>
+
+                                </select>
+
+                                <div class="form-text">
+
+                                    User baru tidak dapat dibuat
+                                    sebagai Original Gangster.
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- BUTTON -->
+
+                            <div class="d-flex gap-2">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary"
+                                >
+
+                                    <i class="bi bi-person-plus"></i>
+
+                                    Buat User
+
+                                </button>
+
+
+                                <a
+                                    href="/user"
+                                    class="btn btn-secondary"
+                                >
+
+                                    Batal
+
+                                </a>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<%- include("../layouts/data") %>
+
+<%- include("../layouts/footer") %>
