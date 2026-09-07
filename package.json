@@ -1,0 +1,25 @@
+{
+  "name": "gudang",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node --watch app.js"
+  },
+  "dependencies": {
+    "admin-lte": "^4.1.0",
+    "axios": "^1.11.0",
+    "bcrypt": "^6.0.0",
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1",
+    "datatables.net": "^3.0.1",
+    "datatables.net-bs5": "^3.0.1",
+    "dotenv": "^17.4.2",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "googleapis": "^173.0.0",
+    "jquery": "^4.0.0",
+    "sweetalert2": "^11.26.25"
+  }
+}
